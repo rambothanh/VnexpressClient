@@ -119,6 +119,8 @@ using VnexpressClient.Models;
         contents = news.Content?.OrderBy(c =>c.Location).ToList();
         //Sắp xếp lại
         imageLinks = news.ImageLink?.OrderBy(c =>c.Location).ToList();
+        
+        if(imageLinks==null) stop =true;
         Console.WriteLine(imageLinks);
     }
 

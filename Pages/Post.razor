@@ -16,12 +16,12 @@ else
         <div>
           @foreach (var con in contents)
             { 
-                if(imageLinks==null){
+                if(true){
                         <p>@con.Text</p>
                         continue;
                 }
 
-              if(con.Location <( imageLinks.ElementAt(countOfImage)?.Location ??0) ||stop){
+              @* if(con.Location <imageLinks.ElementAt(countOfImage)?.Location ||stop){
                   <p>@con.Text</p>
                   continue;
               }else
@@ -34,7 +34,7 @@ else
                       stop = true;
                   }
                   <p>@con.Text</p>
-              }
+              } *@
             }
         </div>
         
@@ -59,6 +59,8 @@ else
         contents = news.Content?.OrderBy(c =>c.Location).ToList();
         //Sắp xếp lại
         imageLinks = news.ImageLink?.OrderBy(c =>c.Location).ToList();
+        
+        if(imageLinks==null) stop =true;
         Console.WriteLine(imageLinks);
     }
 
