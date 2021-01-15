@@ -14,30 +14,35 @@ else
         <h2>@news.Title</h2>
         <hr>
         <div>
-          @foreach (var con in contents)
-            { 
-                if(true){
-                        <p>@con.Text</p>
-                        continue;
+            @foreach (var con in contents)
+            {
+                if (imageLinks?.Any() != true)
+                {
+                    <p>@con.Text</p>
+                    continue;
                 }
 
-              @* if(con.Location <imageLinks.ElementAt(countOfImage)?.Location ||stop){
-                  <p>@con.Text</p>
-                  continue;
-              }else
-              {
-                  <img class="mx-auto d-block" src=@imageLinks.ElementAt(countOfImage).TextLink alt="">
-                  if(countOfImage+1 < imageLinks.Count )
-                  {
-                     countOfImage++; 
-                  }else{
-                      stop = true;
-                  }
-                  <p>@con.Text</p>
-              } *@
+                if (con.Location < imageLinks.ElementAt(countOfImage)?.Location || stop)
+                {
+                    <p>@con.Text</p>
+                    continue;
+                }
+                else
+                {
+                    <img class="mx-auto d-block" src=@imageLinks.ElementAt(countOfImage).TextLink alt="">
+                    if (countOfImage + 1 < imageLinks.Count)
+                    {
+                        countOfImage++;
+                    }
+                    else
+                    {
+                        stop = true;
+                    }
+                    <p>@con.Text</p>
+                }
             }
         </div>
-        
+
     </div>
 }
 
@@ -47,8 +52,8 @@ else
     private int countOfImage = 0;
     private bool stop = false;
     private List<Content> contents;
-    private List<ImageLink> imageLinks =null;
-        private News news;
+    private List<ImageLink> imageLinks = null;
+    private News news;
     private long maxLocation;
     protected override async Task OnInitializedAsync()
     {
@@ -56,12 +61,11 @@ else
         news = await Http.GetFromJsonAsync<News>($"news/{id}");
         maxLocation = Math.Max(news.ImageLink.Count, news.Content.Count);
         //Sắp xếp lại
-        contents = news.Content?.OrderBy(c =>c.Location).ToList();
+        contents = news.Content?.OrderBy(c => c.Location).ToList();
         //Sắp xếp lại
-        imageLinks = news.ImageLink?.OrderBy(c =>c.Location).ToList();
-        
-        if(imageLinks==null) stop =true;
-        Console.WriteLine(imageLinks);
+        imageLinks = news.ImageLink?.OrderBy(c => c.Location).ToList();
+
+
     }
 
 }

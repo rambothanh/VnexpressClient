@@ -13,77 +13,77 @@ namespace VnexpressClient.Pages
     using System.Threading.Tasks;
     using Microsoft.AspNetCore.Components;
 #nullable restore
-#line 1 "D:\Soft\Project\My Git Project\VnexpressClient\_Imports.razor"
+#line 1 "F:\Document of Thanh\DotNetCore\CrawlerProject\VnExpressClient\_Imports.razor"
 using System.Net.Http;
 
 #line default
 #line hidden
 #nullable disable
 #nullable restore
-#line 2 "D:\Soft\Project\My Git Project\VnexpressClient\_Imports.razor"
+#line 2 "F:\Document of Thanh\DotNetCore\CrawlerProject\VnExpressClient\_Imports.razor"
 using System.Net.Http.Json;
 
 #line default
 #line hidden
 #nullable disable
 #nullable restore
-#line 3 "D:\Soft\Project\My Git Project\VnexpressClient\_Imports.razor"
+#line 3 "F:\Document of Thanh\DotNetCore\CrawlerProject\VnExpressClient\_Imports.razor"
 using Microsoft.AspNetCore.Components.Forms;
 
 #line default
 #line hidden
 #nullable disable
 #nullable restore
-#line 4 "D:\Soft\Project\My Git Project\VnexpressClient\_Imports.razor"
+#line 4 "F:\Document of Thanh\DotNetCore\CrawlerProject\VnExpressClient\_Imports.razor"
 using Microsoft.AspNetCore.Components.Routing;
 
 #line default
 #line hidden
 #nullable disable
 #nullable restore
-#line 5 "D:\Soft\Project\My Git Project\VnexpressClient\_Imports.razor"
+#line 5 "F:\Document of Thanh\DotNetCore\CrawlerProject\VnExpressClient\_Imports.razor"
 using Microsoft.AspNetCore.Components.Web;
 
 #line default
 #line hidden
 #nullable disable
 #nullable restore
-#line 6 "D:\Soft\Project\My Git Project\VnexpressClient\_Imports.razor"
+#line 6 "F:\Document of Thanh\DotNetCore\CrawlerProject\VnExpressClient\_Imports.razor"
 using Microsoft.AspNetCore.Components.Web.Virtualization;
 
 #line default
 #line hidden
 #nullable disable
 #nullable restore
-#line 7 "D:\Soft\Project\My Git Project\VnexpressClient\_Imports.razor"
+#line 7 "F:\Document of Thanh\DotNetCore\CrawlerProject\VnExpressClient\_Imports.razor"
 using Microsoft.AspNetCore.Components.WebAssembly.Http;
 
 #line default
 #line hidden
 #nullable disable
 #nullable restore
-#line 8 "D:\Soft\Project\My Git Project\VnexpressClient\_Imports.razor"
+#line 8 "F:\Document of Thanh\DotNetCore\CrawlerProject\VnExpressClient\_Imports.razor"
 using Microsoft.JSInterop;
 
 #line default
 #line hidden
 #nullable disable
 #nullable restore
-#line 9 "D:\Soft\Project\My Git Project\VnexpressClient\_Imports.razor"
+#line 9 "F:\Document of Thanh\DotNetCore\CrawlerProject\VnExpressClient\_Imports.razor"
 using VnexpressClient;
 
 #line default
 #line hidden
 #nullable disable
 #nullable restore
-#line 10 "D:\Soft\Project\My Git Project\VnexpressClient\_Imports.razor"
+#line 10 "F:\Document of Thanh\DotNetCore\CrawlerProject\VnExpressClient\_Imports.razor"
 using VnexpressClient.Shared;
 
 #line default
 #line hidden
 #nullable disable
 #nullable restore
-#line 11 "D:\Soft\Project\My Git Project\VnexpressClient\_Imports.razor"
+#line 11 "F:\Document of Thanh\DotNetCore\CrawlerProject\VnExpressClient\_Imports.razor"
 using VnexpressClient.Models;
 
 #line default
@@ -100,28 +100,27 @@ using VnexpressClient.Models;
         }
         #pragma warning restore 1998
 #nullable restore
-#line 44 "D:\Soft\Project\My Git Project\VnexpressClient\Pages\Post.razor"
+#line 49 "F:\Document of Thanh\DotNetCore\CrawlerProject\VnExpressClient\Pages\Post.razor"
       
     [Parameter]
     public string id { get; set; }
     private int countOfImage = 0;
     private bool stop = false;
     private List<Content> contents;
-    private List<ImageLink> imageLinks =null;
-        private News news;
+    private List<ImageLink> imageLinks = null;
+    private News news;
     private long maxLocation;
     protected override async Task OnInitializedAsync()
     {
-        id = id ?? "5";
+        //id = id ?? "5";
         news = await Http.GetFromJsonAsync<News>($"news/{id}");
         maxLocation = Math.Max(news.ImageLink.Count, news.Content.Count);
         //Sắp xếp lại
-        contents = news.Content?.OrderBy(c =>c.Location).ToList();
+        contents = news.Content?.OrderBy(c => c.Location).ToList();
         //Sắp xếp lại
-        imageLinks = news.ImageLink?.OrderBy(c =>c.Location).ToList();
-        
-        if(imageLinks==null) stop =true;
-        Console.WriteLine(imageLinks);
+        imageLinks = news.ImageLink?.OrderBy(c => c.Location).ToList();
+
+
     }
 
 

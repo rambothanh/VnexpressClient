@@ -1144,24 +1144,26 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\KTNN\\.nuget\\packages\\": {}
+    "C:\\Users\\Admin\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\Soft\\Project\\My Git Project\\VnexpressClient\\VnexpressClient.csproj",
+      "projectUniqueName": "F:\\Document of Thanh\\DotNetCore\\CrawlerProject\\VnExpressClient\\VnexpressClient.csproj",
       "projectName": "VnexpressClient",
-      "projectPath": "D:\\Soft\\Project\\My Git Project\\VnexpressClient\\VnexpressClient.csproj",
-      "packagesPath": "C:\\Users\\KTNN\\.nuget\\packages\\",
-      "outputPath": "D:\\Soft\\Project\\My Git Project\\VnexpressClient\\obj\\",
+      "projectPath": "F:\\Document of Thanh\\DotNetCore\\CrawlerProject\\VnExpressClient\\VnexpressClient.csproj",
+      "packagesPath": "C:\\Users\\Admin\\.nuget\\packages\\",
+      "outputPath": "F:\\Document of Thanh\\DotNetCore\\CrawlerProject\\VnExpressClient\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "C:\\Users\\KTNN\\AppData\\Roaming\\NuGet\\NuGet.Config"
+        "C:\\Users\\Admin\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
         "net5.0"
       ],
       "sources": {
+        "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
         "https://api.nuget.org/v3/index.json": {}
       },
       "frameworks": {

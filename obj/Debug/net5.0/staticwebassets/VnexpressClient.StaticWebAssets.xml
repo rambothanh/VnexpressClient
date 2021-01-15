@@ -1,4 +1,4 @@
 ﻿<StaticWebAssets Version="1.0">
-  <ContentRoot BasePath="/" Path="D:\Soft\Project\My Git Project\VnexpressClient\bin\Debug\net5.0\wwwroot\" />
-  <ContentRoot BasePath="/" Path="D:\Soft\Project\My Git Project\VnexpressClient\obj\Debug\net5.0\scopedcss\bundle\" />
+  <ContentRoot BasePath="/" Path="F:\Document of Thanh\DotNetCore\CrawlerProject\VnExpressClient\bin\Debug\net5.0\wwwroot\" />
+  <ContentRoot BasePath="/" Path="F:\Document of Thanh\DotNetCore\CrawlerProject\VnExpressClient\obj\Debug\net5.0\scopedcss\bundle\" />
 </StaticWebAssets>
