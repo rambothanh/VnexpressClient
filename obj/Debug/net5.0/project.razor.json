@@ -140,7 +140,7 @@
         }
       },
       {
-        "HashCode": 143848537,
+        "HashCode": -709420722,
         "Kind": "Components.Component",
         "Name": "VnexpressClient.Pages.Post",
         "AssemblyName": "VnexpressClient",
@@ -150,13 +150,23 @@
             "TagName": "Post"
           }
         ],
+        "BoundAttributes": [
+          {
+            "Kind": "Components.Component",
+            "Name": "id",
+            "TypeName": "System.String",
+            "Metadata": {
+              "Common.PropertyName": "id"
+            }
+          }
+        ],
         "Metadata": {
           "Runtime.Name": "Components.IComponent",
           "Common.TypeName": "VnexpressClient.Pages.Post"
         }
       },
       {
-        "HashCode": -1494198315,
+        "HashCode": 472154476,
         "Kind": "Components.Component",
         "Name": "VnexpressClient.Pages.Post",
         "AssemblyName": "VnexpressClient",
@@ -164,6 +174,16 @@
         "TagMatchingRules": [
           {
             "TagName": "VnexpressClient.Pages.Post"
+          }
+        ],
+        "BoundAttributes": [
+          {
+            "Kind": "Components.Component",
+            "Name": "id",
+            "TypeName": "System.String",
+            "Metadata": {
+              "Common.PropertyName": "id"
+            }
           }
         ],
         "Metadata": {

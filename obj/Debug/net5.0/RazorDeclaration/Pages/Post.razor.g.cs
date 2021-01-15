@@ -91,6 +91,7 @@ using VnexpressClient.Models;
 #nullable disable
     [Microsoft.AspNetCore.Components.RouteAttribute("/")]
     [Microsoft.AspNetCore.Components.RouteAttribute("/Post")]
+    [Microsoft.AspNetCore.Components.RouteAttribute("/Post/{id?}")]
     public partial class Post : Microsoft.AspNetCore.Components.ComponentBase
     {
         #pragma warning disable 1998
@@ -99,22 +100,26 @@ using VnexpressClient.Models;
         }
         #pragma warning restore 1998
 #nullable restore
-#line 43 "D:\Soft\Project\My Git Project\VnexpressClient\Pages\Post.razor"
+#line 44 "D:\Soft\Project\My Git Project\VnexpressClient\Pages\Post.razor"
       
+    [Parameter]
+    public string id { get; set; }
     private int countOfImage = 0;
     private bool stop = false;
     private List<Content> contents;
-        private List<ImageLink> imageLinks;
-    private string text;
-    private News news;
+    private List<ImageLink> imageLinks =null;
+        private News news;
     private long maxLocation;
     protected override async Task OnInitializedAsync()
     {
-        news = await Http.GetFromJsonAsync<News>("news/2");
+        id = id ?? "5";
+        news = await Http.GetFromJsonAsync<News>($"news/{id}");
         maxLocation = Math.Max(news.ImageLink.Count, news.Content.Count);
-        contents = news.Content.OrderBy(c =>c.Location).ToList();
-        imageLinks = news.ImageLink.OrderBy(c =>c.Location).ToList();
-       
+        //Sắp xếp lại
+        contents = news.Content?.OrderBy(c =>c.Location).ToList();
+        //Sắp xếp lại
+        imageLinks = news.ImageLink?.OrderBy(c =>c.Location).ToList();
+        Console.WriteLine(imageLinks);
     }
 
 

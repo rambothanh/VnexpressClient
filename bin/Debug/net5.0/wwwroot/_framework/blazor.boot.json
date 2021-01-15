@@ -195,11 +195,11 @@
       "mscorlib.dll": "sha256-FWPx51huC\/WJLkKCgoTEa5pzm8+4Aucxg0YuOiuOwkQ=",
       "netstandard.dll": "sha256-2ba2qAAtNUX9Qh5PFXhTMtcD\/Nra\/wyG197\/wrnxElI=",
       "System.Private.CoreLib.dll": "sha256-4wsl1v32v74UB0CTQ6+AdUTdM+9C1VraomgeCjb4Wug=",
-      "VnexpressClient.dll": "sha256-91WWiuGPQyQUG\/B00TQ0L2jnR9CDBiPXPbT2\/0PDKpo="
+      "VnexpressClient.dll": "sha256-VZH0ixqYBrDggQlAAiHjUBcz4UIh6IFomKGuUHvJ6kc="
     },
     "lazyAssembly": null,
     "pdb": {
-      "VnexpressClient.pdb": "sha256-Sk4yep9vhJqv46poQkeJ0bZ9JF0Zwm5tEOjlyi38kyI="
+      "VnexpressClient.pdb": "sha256-+8wkboXw3uZYQNRyEUOjzNQkZ3Bb\/6AkhPM\/3r7wn+o="
     },
     "runtime": {
       "dotnet.timezones.blat": "sha256-nXByiCO4+RYyh+A88TSSZDwAJMF7M7Up\/h6dfAA19C8=",

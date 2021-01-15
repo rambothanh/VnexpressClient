@@ -1,5 +1,6 @@
 @page "/"
 @page "/Post"
+@page "/Post/{id?}"
 @inject HttpClient Http
 
 @if (news == null)
@@ -13,48 +14,52 @@ else
         <h2>@news.Title</h2>
         <hr>
         <div>
-            <!-- Canh giữa Image: class="mx-auto d-block" -->
-            <img class="mx-auto d-block" src="https://www.w3schools.com/images/w3schools_green.jpg" alt="W3Schools.com">
-            <img class="mx-auto d-block" src="lINK HANH" alt="">
-            @foreach (var con in contents)
+          @foreach (var con in contents)
             { 
-                
-              if(con.Location < imageLinks.ElementAt(countOfImage)?.Location ||stop){
+                if(imageLinks==null){
+                        <p>@con.Text</p>
+                        continue;
+                }
+
+              if(con.Location <( imageLinks.ElementAt(countOfImage)?.Location ??0) ||stop){
                   <p>@con.Text</p>
                   continue;
               }else
               {
                   <img class="mx-auto d-block" src=@imageLinks.ElementAt(countOfImage).TextLink alt="">
-                  if(countOfImage+1 <= imageLinks.Count )
+                  if(countOfImage+1 < imageLinks.Count )
                   {
-                      stop = true;
+                     countOfImage++; 
                   }else{
-                      countOfImage++;
+                      stop = true;
                   }
                   <p>@con.Text</p>
               }
             }
-           
         </div>
-        @text
+        
     </div>
 }
 
 @code{
+    [Parameter]
+    public string id { get; set; }
     private int countOfImage = 0;
     private bool stop = false;
     private List<Content> contents;
-        private List<ImageLink> imageLinks;
-    private string text;
-    private News news;
+    private List<ImageLink> imageLinks =null;
+        private News news;
     private long maxLocation;
     protected override async Task OnInitializedAsync()
     {
-        news = await Http.GetFromJsonAsync<News>("news/2");
+        id = id ?? "5";
+        news = await Http.GetFromJsonAsync<News>($"news/{id}");
         maxLocation = Math.Max(news.ImageLink.Count, news.Content.Count);
-        contents = news.Content.OrderBy(c =>c.Location).ToList();
-        imageLinks = news.ImageLink.OrderBy(c =>c.Location).ToList();
-       
+        //Sắp xếp lại
+        contents = news.Content?.OrderBy(c =>c.Location).ToList();
+        //Sắp xếp lại
+        imageLinks = news.ImageLink?.OrderBy(c =>c.Location).ToList();
+        Console.WriteLine(imageLinks);
     }
 
 }
