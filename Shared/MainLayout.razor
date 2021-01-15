@@ -1,47 +1,61 @@
 @inherits LayoutComponentBase
+@inject HttpClient Http
 
 @* <div class="page">
-    <div class="sidebar">
-        <NavMenu />
-    </div>
-
-    <div class="main">
-        <div class="top-row px-4">
-            <a href="http://blazor.net" target="_blank" class="ml-md-auto">About</a>
+        <div class="sidebar">
+            <NavMenu />
         </div>
 
-        <div class="content px-4">
-            @Body
-        </div>
-    </div>
-</div> *@
+        <div class="main">
+            <div class="top-row px-4">
+                <a href="http://blazor.net" target="_blank" class="ml-md-auto">About</a>
+            </div>
 
-    <!-- Khu vực Quảng cáo của VnExpress ^_^ -->
-    <div class="jumbotron text-center" style="margin-bottom:0">
-        <h1>VnExpress</h1>
-        <p>Báo tiếng Việt nhiều người xem nhất</p>
-    </div>
-    <!-- Khu vực Navbar -->
-    <nav class="navbar navbar-expand-sm bg-dark navbar-dark">
-        <a class="navbar-brand" href="#">Home</a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="collapsibleNavbar">
-            <ul class="navbar-nav">
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Link</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Link</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Link</a>
-                </li>
-            </ul>
+            <div class="content px-4">
+                @Body
+            </div>
         </div>
-    </nav>
-    <!-- End Khu vực Navbar -->
+    </div> *@
 
-    <!-- End khu vực nội dung bài viết -->
-     @Body
+<!-- Khu vực Quảng cáo của VnExpress ^_^ -->
+<div class="jumbotron text-center" style="margin-bottom:0">
+    <h1>VnExpress</h1>
+    <p>Báo tiếng Việt nhiều người xem nhất</p>
+</div>
+<!-- Khu vực Navbar -->
+<nav class="navbar navbar-expand-sm bg-dark navbar-dark">
+    <a class="navbar-brand" href="#">Home</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="collapsibleNavbar">
+        <ul class="navbar-nav">
+            @if (categories == null)
+            {
+                <span>Loading ...</span>
+            }
+            else
+            {
+                foreach (var cat in categories)
+                {
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">@cat.Text</a>
+                    </li>
+                }
+                
+            }
+
+        </ul>
+    </div>
+</nav>
+<!-- End Khu vực Navbar -->
+<!-- End khu vực nội dung bài viết -->
+@Body
+@code{
+    private List<Category> categories;
+    protected override async Task OnInitializedAsync()
+    {
+        categories = await Http.GetFromJsonAsync<List<Category>>($"news/GetCats");
+
+    }
+}
