@@ -12,16 +12,18 @@ else
     <div class="container" style="margin-top:30px">
         <!-- Khu vực nội dung bài viết bao gồm tiêu đề -->
         <h2>@news.Title</h2>
+        <span class="text-secondary">@news.DatePost</span>
         <hr>
         <div>
             @foreach (var con in contents)
             {
+                // Check null and empty
                 if (imageLinks?.Any() != true)
                 {
                     <p>@con.Text</p>
                     continue;
                 }
-
+                //Check location content and location Image
                 if (con.Location < imageLinks.ElementAt(countOfImage)?.Location || stop)
                 {
                     <p>@con.Text</p>
@@ -54,17 +56,17 @@ else
     private List<Content> contents;
     private List<ImageLink> imageLinks = null;
     private News news;
-    private long maxLocation;
     protected override async Task OnInitializedAsync()
     {
+        //Parameter null will default is 5
         id = id ?? "5";
+        //Get News by id
         news = await Http.GetFromJsonAsync<News>($"news/{id}");
-        maxLocation = Math.Max(news.ImageLink.Count, news.Content.Count);
-        //Sắp xếp lại
-        contents = news.Content?.OrderBy(c => c.Location).ToList();
-        //Sắp xếp lại
-        imageLinks = news.ImageLink?.OrderBy(c => c.Location).ToList();
 
+        //Get and Order Content
+        contents = news.Content?.OrderBy(c => c.Location).ToList();
+        //Get and Order ImageLink
+        imageLinks = news.ImageLink?.OrderBy(c => c.Location).ToList();
 
     }
 
