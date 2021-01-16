@@ -1,70 +1,59 @@
-﻿@page "/index"
+﻿@page "/"
 @inject HttpClient Http
 
-@if (news == null)
+@if (newss?.Any() != true)
 {
     <span>Loading...</span>
 }
 else
 {
-    <div class="container" style="margin-top:30px">
-        <!-- Khu vực nội dung bài viết bao gồm tiêu đề -->
-        <h2>@news.Title</h2>
-        <span class="text-secondary">@news.DatePost</span>
-        <hr>
-        <div>
-            @foreach (var con in contents)
+    <div class="row content">
+        <div class="col-sm-2 sidenav">
+            <!-- Khoản trống làm chuyện khác -->
+        </div>
+        <div class="col-sm-8">
+            <!-- Khu vực nội dung bài viết bao gồm tiêu đề -->
+            @foreach (var news in newss)
             {
-                // Check null and empty
-                if (imageLinks?.Any() != true)
-                {
-                    <p>@con.Text</p>
-                    continue;
-                }
-                //Check location content and location Image
-                if (con.Location < imageLinks.ElementAt(countOfImage)?.Location || stop)
-                {
-                    <p>@con.Text</p>
-                    continue;
-                }
-                else
-                {
-                    <img class="mx-auto d-block" src=@imageLinks.ElementAt(countOfImage).TextLink alt="">
-                    if (countOfImage + 1 < imageLinks.Count)
-                    {
-                        countOfImage++;
-                    }
-                    else
-                    {
-                        stop = true;
-                    }
-                    <p>@con.Text</p>
-                }
+                <h5>@news.Title</h5>
+                <div>
+                    <!-- Canh giữa Image: class="mx-auto d-block" -->
+                    <!-- img-fluid responsive image -->
+                    <img class="img-fluid mx-auto d-block"
+                        src="https://i1-sohoa.vnecdn.net/2021/01/14/fully-autonomous-air-taxi-conc-7655-7530-1610616164.jpg?w=680&h=0&q=100&dpr=1&fit=crop&s=FjwFeaGrYFjSGwyWa7IKMg"
+                        alt="W3Schools.com">
+                    <p>Some text about me in culpa qui officia deserunt mollit anim..Some text about me in culpa qui officia
+                        deserunt mollit animSome text about me in culpa qui officia deserunt mollit anim</p>
+                </div>
             }
+            <h5>Tiêu đề</h5>
+            <div>
+                <!-- Canh giữa Image: class="mx-auto d-block" -->
+                <!-- img-fluid responsive image -->
+                <img class="img-fluid mx-auto d-block"
+                    src="https://i1-sohoa.vnecdn.net/2021/01/14/fully-autonomous-air-taxi-conc-7655-7530-1610616164.jpg?w=680&h=0&q=100&dpr=1&fit=crop&s=FjwFeaGrYFjSGwyWa7IKMg"
+                    alt="W3Schools.com">
+                <p>Some text about me in culpa qui officia deserunt mollit anim..Some text about me in culpa qui officia
+                    deserunt mollit animSome text about me in culpa qui officia deserunt mollit anim</p>
+            </div>
+
         </div>
 
+        <div class="col-sm-2 sidenav">
+            <!-- Khoản trống để quảng cáo ^^ -->
+        </div>
     </div>
 }
 
 @code{
-    [Parameter]
-    public string id { get; set; }
-    private int countOfImage = 0;
-    private bool stop = false;
-    private List<Content> contents;
-    private List<ImageLink> imageLinks = null;
-    private News news;
+    private List<News> newss;
+
     protected override async Task OnInitializedAsync()
     {
-        //Parameter null will default is 5
-        id = id ?? "5";
-        //Get News by id
-        news = await Http.GetFromJsonAsync<News>($"news/{id}");
 
-        //Get and Order Content
-        contents = news.Content?.OrderBy(c => c.Location).ToList();
-        //Get and Order ImageLink
-        imageLinks = news.ImageLink?.OrderBy(c => c.Location).ToList();
+        newss = await Http.GetFromJsonAsync<List<News>>($"news");
+
+
 
     }
 

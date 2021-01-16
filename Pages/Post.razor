@@ -1,4 +1,3 @@
-@page "/"
 @page "/Post"
 @page "/Post/{id?}"
 @inject HttpClient Http
@@ -31,7 +30,8 @@ else
                 }
                 else
                 {
-                    <img class="mx-auto d-block" src=@imageLinks.ElementAt(countOfImage).TextLink alt="">
+                    //img-fluid responsive image
+                    <img class="img-fluid mx-auto d-block" src=@imageLinks.ElementAt(countOfImage).TextLink alt="">
                     if (countOfImage + 1 < imageLinks.Count)
                     {
                         countOfImage++;
