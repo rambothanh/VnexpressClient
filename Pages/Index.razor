@@ -1,5 +1,71 @@
-﻿@page "/Index"
+﻿@page "/index"
+@inject HttpClient Http
 
+@if (news == null)
+{
+    <span>Loading...</span>
+}
+else
+{
+    <div class="container" style="margin-top:30px">
+        <!-- Khu vực nội dung bài viết bao gồm tiêu đề -->
+        <h2>@news.Title</h2>
+        <span class="text-secondary">@news.DatePost</span>
+        <hr>
+        <div>
+            @foreach (var con in contents)
+            {
+                // Check null and empty
+                if (imageLinks?.Any() != true)
+                {
+                    <p>@con.Text</p>
+                    continue;
+                }
+                //Check location content and location Image
+                if (con.Location < imageLinks.ElementAt(countOfImage)?.Location || stop)
+                {
+                    <p>@con.Text</p>
+                    continue;
+                }
+                else
+                {
+                    <img class="mx-auto d-block" src=@imageLinks.ElementAt(countOfImage).TextLink alt="">
+                    if (countOfImage + 1 < imageLinks.Count)
+                    {
+                        countOfImage++;
+                    }
+                    else
+                    {
+                        stop = true;
+                    }
+                    <p>@con.Text</p>
+                }
+            }
+        </div>
 
-<h1>Trang Home sẽ xử lý sau</h1>
+    </div>
+}
 
+@code{
+    [Parameter]
+    public string id { get; set; }
+    private int countOfImage = 0;
+    private bool stop = false;
+    private List<Content> contents;
+    private List<ImageLink> imageLinks = null;
+    private News news;
+    protected override async Task OnInitializedAsync()
+    {
+        //Parameter null will default is 5
+        id = id ?? "5";
+        //Get News by id
+        news = await Http.GetFromJsonAsync<News>($"news/{id}");
+
+        //Get and Order Content
+        contents = news.Content?.OrderBy(c => c.Location).ToList();
+        //Get and Order ImageLink
+        imageLinks = news.ImageLink?.OrderBy(c => c.Location).ToList();
+
+    }
+
+}
