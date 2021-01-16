@@ -37,19 +37,7 @@ else
                     </div>
                 </div>
             }
-            <h5>Tiêu đề</h5>
-            <div>
-                <!-- Canh giữa Image: class="mx-auto d-block" -->
-                <!-- img-fluid responsive image -->
-                <img class="img-fluid mx-auto d-block"
-                    src="https://i1-sohoa.vnecdn.net/2021/01/14/fully-autonomous-air-taxi-conc-7655-7530-1610616164.jpg?w=680&h=0&q=100&dpr=1&fit=crop&s=FjwFeaGrYFjSGwyWa7IKMg"
-                    alt="W3Schools.com">
-                <p>Some text about me in culpa qui officia deserunt mollit anim..Some text about me in culpa qui officia
-                    deserunt mollit animSome text about me in culpa qui officia deserunt mollit anim</p>
-            </div>
-
         </div>
-
         <div class="col-sm-2 sidenav">
             <!-- Khoản trống để quảng cáo ^^ -->
         </div>
@@ -58,32 +46,38 @@ else
 
 @code{
     [Parameter]
-    public string catId {get;set;}
+    public string catId { get; set; }
     private List<News> newss;
 
     protected override async Task OnInitializedAsync()
     {
         newss = await Http.GetFromJsonAsync<List<News>>($"news");
-        if(string.IsNullOrEmpty(catId))
+        newss = newss.OrderByDescending(x=> x.Id).ToList();
+        if (string.IsNullOrEmpty(catId))
         {
             //Không làm gì
-        }else{
+        }
+        else
+        {
             //Chỉnh lại newss
             long catIdLong = long.Parse(catId);
             newss = newss.Where(n => n.Category.Id == catIdLong).ToList();
             StateHasChanged();
         }
-        
+
 
     }
 
     //Khi Parameter thay đổi
-     protected override async Task OnParametersSetAsync()
+    protected override async Task OnParametersSetAsync()
     {
         newss = await Http.GetFromJsonAsync<List<News>>($"news");
+            
         //Chỉnh lại newss
         long catIdLong = long.Parse(catId);
         newss = newss.Where(n => n.Category.Id == catIdLong).ToList();
+        //Sắp xếp lại
+        newss = newss.OrderByDescending(x=> x.Id).ToList();
     }
 
 }
