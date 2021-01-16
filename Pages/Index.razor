@@ -58,18 +58,19 @@ else
 
 @code{
     [Parameter]
-    public long catId {get;set;}
+    public string catId {get;set;}
     private List<News> newss;
 
     protected override async Task OnInitializedAsync()
     {
         newss = await Http.GetFromJsonAsync<List<News>>($"news");
-        if(catId == 0)
+        if(string.IsNullOrEmpty(catId))
         {
             //Không làm gì
         }else{
             //Chỉnh lại newss
-            newss = newss.Where(n => n.Category.Id == catId).ToList();
+            long catIdLong = long.Parse(catId);
+            newss = newss.Where(n => n.Category.Id == catIdLong).ToList();
         }
         
 
