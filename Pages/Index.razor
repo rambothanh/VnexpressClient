@@ -1,4 +1,5 @@
 ﻿@page "/"
+@page "/{catId?}"
 @inject HttpClient Http
 
 @if (newss?.Any() != true)
@@ -15,21 +16,25 @@ else
             <!-- Khu vực nội dung bài viết bao gồm tiêu đề -->
             @foreach (var news in newss)
             {
-                <h5>@news.Title</h5>
-                <div>
-                    @* Kiểm tra image *@
-                    @if(news.ImageLink?.Any() != true)
-                    {
+                <div class="position-relative">
+                    <h5>@news.Title</h5>
+                    <a class="stretched-link" href=@("Post/"+news.Id)></a>
+                    <div>
+                        @* Kiểm tra image *@
+                        @if (news.ImageLink?.Any() != true)
+                        {
+                            //Nếu ImageLink rỗng hoặc null thì không làm gì
+                            //Ngược lại thì thêm ảnh vào vào
+                        }
+                        else
+                        {
+                            <img class="img-fluid mx-auto d-block" src=@news.ImageLink.ElementAt(0).TextLink>
+                        }
+                        <!-- Canh giữa Image: class="mx-auto d-block" -->
+                        <!-- img-fluid responsive image -->
 
-                    }else{
-                       <img class="img-fluid mx-auto d-block"
-                        src=@news.ImageLink.ElementAt(0).TextLink
-                        alt="W3Schools.com"> 
-                    }
-                    <!-- Canh giữa Image: class="mx-auto d-block" -->
-                    <!-- img-fluid responsive image -->
-                    
-                    <p>@news.Content.ElementAt(0).Text</p>
+                        <p>@news.Content.ElementAt(0).Text</p>
+                    </div>
                 </div>
             }
             <h5>Tiêu đề</h5>
@@ -52,14 +57,21 @@ else
 }
 
 @code{
+    [Parameter]
+    public long catId {get;set;}
     private List<News> newss;
 
     protected override async Task OnInitializedAsync()
     {
-
         newss = await Http.GetFromJsonAsync<List<News>>($"news");
-
-
+        if(catId == 0)
+        {
+            //Không làm gì
+        }else{
+            //Chỉnh lại newss
+            newss = newss.Where(n => n.Category.Id == catId).ToList();
+        }
+        
 
     }
 
