@@ -17,13 +17,19 @@ else
             {
                 <h5>@news.Title</h5>
                 <div>
+                    @* Kiểm tra image *@
+                    @if(news.ImageLink?.Any() != true)
+                    {
+
+                    }else{
+                       <img class="img-fluid mx-auto d-block"
+                        src=@news.ImageLink.ElementAt(0).TextLink
+                        alt="W3Schools.com"> 
+                    }
                     <!-- Canh giữa Image: class="mx-auto d-block" -->
                     <!-- img-fluid responsive image -->
-                    <img class="img-fluid mx-auto d-block"
-                        src="https://i1-sohoa.vnecdn.net/2021/01/14/fully-autonomous-air-taxi-conc-7655-7530-1610616164.jpg?w=680&h=0&q=100&dpr=1&fit=crop&s=FjwFeaGrYFjSGwyWa7IKMg"
-                        alt="W3Schools.com">
-                    <p>Some text about me in culpa qui officia deserunt mollit anim..Some text about me in culpa qui officia
-                        deserunt mollit animSome text about me in culpa qui officia deserunt mollit anim</p>
+                    
+                    <p>@news.Content.ElementAt(0).Text</p>
                 </div>
             }
             <h5>Tiêu đề</h5>
