@@ -51,33 +51,30 @@ else
 
     protected override async Task OnInitializedAsync()
     {
+        @* newss = await Http.GetFromJsonAsync<List<News>>($"news");
+        newss = newss.OrderByDescending(x => x.Id).ToList(); *@
+        
+    }
+
+    //Khi Parameter thay đổi
+    protected override async Task OnParametersSetAsync()
+    {
+        @* catId = catId ?? ""; *@
         newss = await Http.GetFromJsonAsync<List<News>>($"news");
-        newss = newss.OrderByDescending(x=> x.Id).ToList();
         if (string.IsNullOrEmpty(catId))
         {
-            //Không làm gì
+            //Sắp xếp lại:
+            newss = newss.OrderByDescending(x => x.Id).ToList();
         }
         else
         {
             //Chỉnh lại newss
             long catIdLong = long.Parse(catId);
             newss = newss.Where(n => n.Category.Id == catIdLong).ToList();
-            StateHasChanged();
+            //Sắp xếp lại
+            newss = newss.OrderByDescending(x => x.Id).ToList();
         }
 
-
-    }
-
-    //Khi Parameter thay đổi
-    protected override async Task OnParametersSetAsync()
-    {
-        newss = await Http.GetFromJsonAsync<List<News>>($"news");
-            
-        //Chỉnh lại newss
-        long catIdLong = long.Parse(catId);
-        newss = newss.Where(n => n.Category.Id == catIdLong).ToList();
-        //Sắp xếp lại
-        newss = newss.OrderByDescending(x=> x.Id).ToList();
     }
 
 }
