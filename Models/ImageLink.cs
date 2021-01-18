@@ -12,6 +12,7 @@ namespace VnexpressClient.Models
         public News News  {get;set;}
 
         public long Location { get; set; }
+        public string Captain { get; set; }
         
         
     }

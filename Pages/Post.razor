@@ -30,8 +30,13 @@ else
                 }
                 else
                 {
-                    //img-fluid responsive image
-                    <img class="img-fluid mx-auto d-block" src=@imageLinks.ElementAt(countOfImage).TextLink alt="">
+                    <figure class="figure">
+                        @*img-fluid responsive image *@
+                        <img class="img-fluid mx-auto d-block" src=@imageLinks.ElementAt(countOfImage).TextLink alt="">
+                        <figcaption class="figure-caption" >@imageLinks.ElementAt(countOfImage).Captain</figcaption>
+                    </figure>
+                    
+                    
                     if (countOfImage + 1 < imageLinks.Count)
                     {
                         countOfImage++;
@@ -56,10 +61,10 @@ else
     private List<Content> contents;
     private List<ImageLink> imageLinks = null;
     private News news;
-    protected override async Task OnInitializedAsync()
+    protected override async Task OnParametersSetAsync()
     {
         //Parameter null will default is 5
-        id = id ?? "5";
+        id = id ?? "8";
         //Get News by id
         news = await Http.GetFromJsonAsync<News>($"news/{id}");
 
