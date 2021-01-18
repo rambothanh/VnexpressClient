@@ -48,19 +48,14 @@ else
     [Parameter]
     public string catId { get; set; }
     private List<News> newss;
-
-    protected override async Task OnInitializedAsync()
-    {
-        @* newss = await Http.GetFromJsonAsync<List<News>>($"news");
-        newss = newss.OrderByDescending(x => x.Id).ToList(); *@
-        
-    }
-
+    
     //Khi Parameter thay đổi
     protected override async Task OnParametersSetAsync()
     {
-        @* catId = catId ?? ""; *@
+        //Lấy tất cả news trong data
         newss = await Http.GetFromJsonAsync<List<News>>($"news");
+        // Kiểm tra xem tham số catId có được cung cấp không, nếu
+        // không sẽ show home, nếu có sẽ show news of Cat
         if (string.IsNullOrEmpty(catId))
         {
             //Sắp xếp lại:
