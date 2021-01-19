@@ -26,6 +26,17 @@ else
                 if (con.Location < imageLinks.ElementAt(countOfImage)?.Location || stop)
                 {
                     <p>@con.Text</p>
+                    //Nếu là content cuối cùng và kế đó còn một tấm hình
+                    if (con == contents.Last() && imageLinks.ElementAt(countOfImage) != null)
+                    {
+                        <figure class="figure">
+                            @*img-fluid responsive image *@
+                            <img class="figure-img img-fluid mx-auto d-block" src=@imageLinks.ElementAt(countOfImage).TextLink alt="">
+                            <figcaption class="figure-caption">@imageLinks.ElementAt(countOfImage).Captain</figcaption>
+                        </figure>
+                    }
+
+
                     continue;
                 }
                 else
@@ -33,10 +44,10 @@ else
                     <figure class="figure">
                         @*img-fluid responsive image *@
                         <img class="figure-img img-fluid mx-auto d-block" src=@imageLinks.ElementAt(countOfImage).TextLink alt="">
-                        <figcaption class="figure-caption" >@imageLinks.ElementAt(countOfImage).Captain</figcaption>
+                        <figcaption class="figure-caption">@imageLinks.ElementAt(countOfImage).Captain</figcaption>
                     </figure>
-                    
-                    
+
+
                     if (countOfImage + 1 < imageLinks.Count)
                     {
                         countOfImage++;
