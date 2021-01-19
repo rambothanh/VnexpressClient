@@ -26,8 +26,13 @@ else
                 if (con.Location < imageLinks.ElementAt(countOfImage)?.Location || stop)
                 {
                     <p>@con.Text</p>
-                    //Nếu là content cuối cùng và kế đó còn một tấm hình
-                    if (con == contents.Last() && imageLinks.ElementAt(countOfImage) != null)
+
+                    // Nếu là content cuối cùng và kế đó còn một tấm hình
+                    // Nhớ so sánh thêm  location 1 lần nữa, vì có trường hợp 
+                    // stop
+                    if (con == contents.Last() 
+                        && imageLinks.ElementAt(countOfImage) != null
+                        && con.Location < imageLinks.ElementAt(countOfImage).Location)
                     {
                         <figure class="figure">
                             @*img-fluid responsive image *@
