@@ -47,7 +47,8 @@ else
     <nav>
         <ul class="pagination justify-content-end">
             <li class="page-item">
-                <button @onclick="Previous" disabled=@disabledPrevious type="button" class="btn btn-outline-secondary">Previous</button>
+                <button @onclick="Previous" disabled=@disabledPrevious type="button"
+                    class="btn btn-outline-secondary">Previous</button>
                 @* <a class="page-link" href="#" tabindex="-1">Previous</a> *@
             </li>
             @* <li class="page-item"><a class="page-link" href="#">1</a></li>
@@ -69,74 +70,55 @@ else
     private List<News> newss;
     private bool disabledPrevious = true;
     private bool disabledNext;
+    int countNewss;
+    int skip;
 
+    @* protected override async Task OnInitializedAsync()
+        {
 
-//Khi Parameter thay đổi
-protected override async Task OnParametersSetAsync()
+        } *@
+
+    //Khi Parameter thay đổi
+    protected override async Task OnParametersSetAsync()
     {
         //Phân trang, mỗi trang 10 news
         int skip = ((pageId ?? 1) - 1) * 10;
         // Nếu catId không cung cấp, thì cho bằng 0, tức là trang chủ
         catId = catId ?? 0;
-
-        //Enable button Previous
-        if(skip>0){
-            disabledPrevious = false;
-        }else{
-            disabledPrevious = true;
-        }
-
-        if (catId==0)
+        newss = await Http.GetFromJsonAsync<List<News>>($"news/{catId}/{skip}/10");
+        countNewss = await Http.GetFromJsonAsync<int>($"news/count/{catId}");
+        //Disabled button Previous
+        if (skip > 0)
         {
-            //Lấy 10 bài từ skip (api đã sắp xếp sẵn)
-            newss = await Http.GetFromJsonAsync<List<News>>($"news/{skip}/10");
-            
-            @* int countNews = newss.Count();
-            //Chinh lại skip: ví dụ: có 15 news, skip đang là 10--> take 10 sẽ return null
-            //Nếu số lượng news trừ đi skip nhỏ hơn 10 thì lấy luôn 10 news cuối luôn
-            //--> skip = số lượng news - 10;
-            if(countNews - skip < 10){
-                skip = countNews - 10;
-            } *@
-            //Sắp xếp lại:
-            //newss = newss.OrderByDescending(x => x.Id).Skip(skip).Take(10).ToList();
-
+            disabledPrevious = false;
         }
         else
         {
-            //Chỉnh lại newss
-            newss = newss.Where(n => n.Category.Id == catId).ToList();
-            //Lấy số lượng:
-            int countNews = newss.Count();
-            //Chinh lại skip: ví dụ: có 15 news, skip đang là 10--> take 10 sẽ return null
-            //Nếu số lượng news trừ đi skip nhỏ hơn 10 thì lấy luôn 10 news cuối luôn
-            //--> skip = số lương news - 10;
-            if(countNews - skip < 10){
-                skip = countNews - 10;
-                disabledNext = true;
-            }
-            //Sắp xếp lại
-            newss = newss.OrderByDescending(x => x.Id).Skip(skip).Take(10).ToList();
+            disabledPrevious = true;
         }
 
+        //Disabled button Next
+        if (skip + 10 >= countNewss)
+        {
+            disabledNext = true;
+        }
+        else
+        {
+            disabledNext = false;
+        }
     }
     void Next()
     {
-        newss =null;
         //Điều hướng đến cat và pag mong muốn (nhưng cách này load hơi chậm)
-        catId = catId ?? 0;
         int pageIdAddOne = (pageId ?? 1) + 1;
         NavigationManager.NavigateTo($"{catId}/{pageIdAddOne}");
-        StateHasChanged();
     }
     void Previous()
     {
-        newss =null;
-        //Điều hướng đến cat và pag mong muốn (nhưng cách này load hơi chậm)
-        catId = catId ?? 0;
-        int pageIdAddOne = (pageId ?? 1) + 1;
-        NavigationManager.NavigateTo($"{catId}/{pageIdAddOne}");
-        StateHasChanged();
+
+        int pageIdSubOne = (pageId ?? 1) - 1;
+        NavigationManager.NavigateTo($"{catId}/{pageIdSubOne}");
+
     }
 
 }
