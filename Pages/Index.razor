@@ -1,5 +1,5 @@
 ﻿@page "/"
-@page "/{catId?}/{pageId?}"
+@page "/{catId:long?}/{pageId:int?}"
 
 @inject NavigationManager NavigationManager
 @inject HttpClient Http
@@ -63,9 +63,9 @@ else
 
 @code{
     [Parameter]
-    public string catId { get; set; }
+    public long? catId { get; set; }
     [Parameter]
-    public string pageId { get; set; }
+    public int? pageId { get; set; }
     private List<News> newss;
     private bool disabledPrevious = true;
     private bool disabledNext;
@@ -80,8 +80,8 @@ protected override async Task OnParametersSetAsync()
         // không sẽ show home, nếu có sẽ show news of Cat
         
         //Phân trang, mỗi trang 10 news
-        int skip = (int.Parse(pageId ?? "1") - 1) * 10;
-        long catIdLong = long.Parse(catId ?? "0");
+        int skip = ((pageId ?? 1) - 1) * 10;
+        catId = catId ?? 0;
 
         //Enable button Previous
         if(skip>0){
@@ -90,7 +90,7 @@ protected override async Task OnParametersSetAsync()
             disabledPrevious = true;
         }
 
-        if (catIdLong==0)
+        if (catId==0)
         {
             int countNews = newss.Count();
             //Chinh lại skip: ví dụ: có 15 news, skip đang là 10--> take 10 sẽ return null
@@ -106,7 +106,7 @@ protected override async Task OnParametersSetAsync()
         else
         {
             //Chỉnh lại newss
-            newss = newss.Where(n => n.Category.Id == catIdLong).ToList();
+            newss = newss.Where(n => n.Category.Id == catId).ToList();
             //Lấy số lượng:
             int countNews = newss.Count();
             //Chinh lại skip: ví dụ: có 15 news, skip đang là 10--> take 10 sẽ return null
@@ -125,18 +125,18 @@ protected override async Task OnParametersSetAsync()
     {
         newss =null;
         //Điều hướng đến cat và pag mong muốn (nhưng cách này load hơi chậm)
-        long catIdLongAdd = long.Parse(catId ?? "0");
-        int pageIdAddOne = int.Parse(pageId ?? "1") +1;
-        NavigationManager.NavigateTo($"{catIdLongAdd}/{pageIdAddOne}");
+        catId = catId ?? 0;
+        int pageIdAddOne = (pageId ?? 1) + 1;
+        NavigationManager.NavigateTo($"{catId}/{pageIdAddOne}");
         StateHasChanged();
     }
     void Previous()
     {
         newss =null;
         //Điều hướng đến cat và pag mong muốn (nhưng cách này load hơi chậm)
-        long catIdLongAdd = long.Parse(catId ?? "0");
-        int pageIdAddOne = int.Parse(pageId ?? "1") - 1;
-        NavigationManager.NavigateTo($"{catIdLongAdd}/{pageIdAddOne}");
+        catId = catId ?? 0;
+        int pageIdAddOne = (pageId ?? 1) + 1;
+        NavigationManager.NavigateTo($"{catId}/{pageIdAddOne}");
         StateHasChanged();
     }
 
