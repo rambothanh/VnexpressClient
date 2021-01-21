@@ -113,19 +113,14 @@ else
            
             // Nếu page hiện tại nhỏ hơn 6 thì cứ bắt đầu page từ 1, 
             // Ngược lại thì cứ lấy page hiện tại trừ đi 4
-            // Tuy nhiên nếu page hiện tại gần đến cuối cách 10 thì 
+            // Tuy nhiên nếu pageStart cách page cuối 10 page thì 
             // không lùi nữa
             // Giá trị nhỏ hơn giữa ((pageId ?? 1) < 6)?1:((pageId ?? 1) - 4)
             // Và pageCount - 9 
-            int pageFront = Math.Min((((pageId ?? 1) < 6)?1:((pageId ?? 1) - 4)),pageCount - 9);
+            int pageStart = Math.Min((((pageId ?? 1) < 6)?1:((pageId ?? 1) - 4)),pageCount - 9);
+            //Số 10 phía sau trong hàm Range tức là luôn luôn hiển thị 10 trang 
+            pageNumber = Enumerable.Range(pageStart, 10).ToList();
             
-            //Lấy giá trị nhỏ nhất của page hiện tại +4 và số lượng page tổng
-            int pageBack= Math.Min(10, pageCount-pageFront + 1);
-            Console.WriteLine(pageBack);
-
-            pageNumber = Enumerable.Range(pageFront, pageBack).ToList();
-            //var int pageFront = int.Parse(Math.Abs(pageId));
-            //pageNumber = Enumerable.Range(System(1, pageId-5),Math.Max(pageId+4,p ageCount)).ToList();
         }
         
         //Disabled current Page
