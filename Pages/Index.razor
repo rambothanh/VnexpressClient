@@ -78,7 +78,6 @@ else
     private bool disabledPrevious = true;
     private bool disabledNext;
     private int countNewss;
-    private int skip;
     private const int PAGE_SIZE = 10;
     private List<int> pageNumber;
 
@@ -103,8 +102,11 @@ else
         //Cho page chỉ hiện 10 số, đặt số page hiện tại ở giữa
         //nếu số lượng page quá nhiều
         int pageCount = countNewss/PAGE_SIZE + 1;
+        
+        //Nếu số lượng page nhỏ hơn 10 thì cứ bắt đầu từ 1 đến pageCount
         if(pageCount <= 10)
         {
+            //Tạo một list chứa các số từ 1 đến pageCount để làm số trang
             pageNumber = Enumerable.Range(1, pageCount).ToList();
 
         }else
@@ -118,6 +120,7 @@ else
             // Và pageCount - 9 
             int pageStart = Math.Min((((pageId ?? 1) < 6)?1:((pageId ?? 1) - 4)),pageCount - 9);
             //Số 10 phía sau trong hàm Range tức là luôn luôn hiển thị 10 trang 
+            //Tạo một list chứa các số từ pageStart đến 10 để làm số trang.
             pageNumber = Enumerable.Range(pageStart, 10).ToList();
             
         }
