@@ -1,5 +1,7 @@
 ﻿@page "/"
-@page "/{catId?}"
+@* @page "/{catId?}" *@
+@page "/{catId?}/{pageId?}"
+
 @inject HttpClient Http
 
 @if (newss?.Any() != true)
@@ -42,34 +44,58 @@ else
             <!-- Khoản trống để quảng cáo ^_^ -->
         </div>
     </div>
+    <nav>
+        <ul class="pagination justify-content-end">
+            <li class="page-item disabled">
+                <a class="page-link" href="#" tabindex="-1">Previous</a>
+            </li>
+            @* <li class="page-item"><a class="page-link" href="#">1</a></li>
+                <li class="page-item"><a class="page-link" href="#">2</a></li>
+                <li class="page-item"><a class="page-link" href="#">3</a></li> *@
+            <li class="page-item">
+                <a class="page-link" onclick="Next">Next</a>
+            </li>
+        </ul>
+    </nav>
 }
 
 @code{
     [Parameter]
     public string catId { get; set; }
+    [Parameter]
+    public string pageId { get; set; }
     private List<News> newss;
 
-    //Khi Parameter thay đổi
-    protected override async Task OnParametersSetAsync()
+
+
+//Khi Parameter thay đổi
+protected override async Task OnParametersSetAsync()
     {
         //Lấy tất cả news trong data
         newss = await Http.GetFromJsonAsync<List<News>>($"news");
         // Kiểm tra xem tham số catId có được cung cấp không, nếu
         // không sẽ show home, nếu có sẽ show news of Cat
-        if (string.IsNullOrEmpty(catId))
+        
+        int skip = (int.Parse(pageId ?? "1") - 1) * 10;
+        long catIdLong = long.Parse(catId ?? "0"); 
+
+        if (catIdLong==0)
         {
             //Sắp xếp lại:
-            newss = newss.OrderByDescending(x => x.Id).ToList();
+            newss = newss.OrderByDescending(x => x.Id).Skip(skip).Take(10).ToList();
         }
         else
         {
             //Chỉnh lại newss
-            long catIdLong = long.Parse(catId);
             newss = newss.Where(n => n.Category.Id == catIdLong).ToList();
             //Sắp xếp lại
-            newss = newss.OrderByDescending(x => x.Id).ToList();
+            newss = newss.OrderByDescending(x => x.Id).Skip(skip).Take(10).ToList();
         }
 
+    }
+    void Next()
+    {
+        
     }
 
 }
