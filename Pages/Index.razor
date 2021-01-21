@@ -74,13 +74,9 @@ else
 //Khi Parameter thay đổi
 protected override async Task OnParametersSetAsync()
     {
-        // Lấy tất cả news trong data
-         newss = await Http.GetFromJsonAsync<List<News>>($"news");
-        // Kiểm tra xem tham số catId có được cung cấp không, nếu
-        // không sẽ show home, nếu có sẽ show news of Cat
-        
         //Phân trang, mỗi trang 10 news
         int skip = ((pageId ?? 1) - 1) * 10;
+        // Nếu catId không cung cấp, thì cho bằng 0, tức là trang chủ
         catId = catId ?? 0;
 
         //Enable button Previous
@@ -92,17 +88,18 @@ protected override async Task OnParametersSetAsync()
 
         if (catId==0)
         {
+            //Lấy 10 bài từ skip (api đã sắp xếp sẵn)
+            newss = await Http.GetFromJsonAsync<List<News>>($"news/{skip}/10");
             
-            int countNews = newss.Count();
+            @* int countNews = newss.Count();
             //Chinh lại skip: ví dụ: có 15 news, skip đang là 10--> take 10 sẽ return null
             //Nếu số lượng news trừ đi skip nhỏ hơn 10 thì lấy luôn 10 news cuối luôn
-            //--> skip = số lương news - 10;
+            //--> skip = số lượng news - 10;
             if(countNews - skip < 10){
                 skip = countNews - 10;
-            }
+            } *@
             //Sắp xếp lại:
-            newss = newss.OrderByDescending(x => x.Id).Skip(skip).Take(10).ToList();
-            
+            //newss = newss.OrderByDescending(x => x.Id).Skip(skip).Take(10).ToList();
 
         }
         else
